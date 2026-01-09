@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fireworks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: open sans;
+            text-align: center;
+        }
+
+        .canvas {
+            height: 60vh;
+            width: 96vw;
+            border: 2px solid white;
+            margin: 5px;
+        }
+        button {
+            border-radius: 5px;
+            background-color: white;
+            border: 1px solid black;
+        }
+        @keyframes explode {
+            0% {
+                
+                height: 20px;
+                width: 20px;
+
+            }
+
+            50% {
+                
+              
+                height: 200px;
+                width: 200px;
+                border-radius: 300px;
+            }
+
+            60% {
+                opacity: 0.8;
+                 height: 210px;
+                width: 210px;
+                border-radius: 200px;
+            }
+
+            100% {
+                opacity: 0;
+               height: 210px;
+                width: 210px;
+                border-radius: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Fireworks Simulator</h1>
+    <h3>Place colours for these fireworks (By Jacalastre123)</h3>
+
+    <nav>
+        <div id="buttPlace">
+        <button onclick="firework(this)">Green</button>
+        <button onclick="firework(this)">Red</button>
+        <button onclick="firework(this)">Blue</button>
+        <button onclick="firework(this)">White</button>
+        <button onclick="firework(this)">Purple</button>
+        <button onclick="firework(this)">Brown</button>
+        </div>
+        <button onclick="customise()">Customise</button>
+        
+        <button onclick="start()">Start</button>
+    </nav>
+    <div class="canvas">
+
+    </div>
+    <dialog id="dial">
+        <form>
+            <label for="colourful">Colour: </label>
+            <input type="color" id="colourful"><br>
+            
+
+
+        </form>
+                    <button onclick="closes()">Add</button>
+    </dialog>
+    <div id="waves">
+
+    </div>
+    <script>
+        const canvas = document.querySelector(".canvas")
+        const dial = document.getElementById("dial")
+        const colourful = dial.querySelector("#colourful")
+        const waves = document.querySelector("#waves")
+        
+        let circle;
+        let circleCount = 0
+       
+        function firework(button) {
+            canvas.addEventListener("mousedown", (event) => {
+                if (event.button === 0) {
+                    circleCount++
+                     circle = document.createElement("div")
+                    circle.style.backgroundColor = button.innerText
+                    circle.style.height = "20px"
+                    circle.style.width = "20px"
+                    circle.style.position = "absolute"
+                    circle.style.top  = event.clientY + "px"
+                    circle.style.left  = event.clientX + "px"
+                    circle.className = "circle"
+                    circle.style.borderRadius = "100px"
+                    
+                    document.body.appendChild(circle)
+                }
+            })
+        }   
+
+        function start() {
+            let amount = document.querySelectorAll(".circle")
+    
+    amount.forEach(circle => {           
+         circle.style.animation = "explode 2.2s"
+let timer = setTimeout(function() {circle.remove() }, 2200)
+        })  
+
+
+      
+
+
+            
+
+
+            
+            
+        }
+
+        function customise() {
+            dial.showModal()
+
+        }
+
+        function closes() {
+            const newButton = document.createElement("button")
+            newButton.innerHTML = colourful.value;
+            newButton.onclick = function() {
+                firework(this)
+            }
+            let navo = document.querySelector("#buttPlace")
+            
+            navo.appendChild(newButton)
+            dial.close()
+        }
+
+    </script>
+</body>
+</html>
